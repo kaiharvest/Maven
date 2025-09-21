@@ -10,9 +10,15 @@
     <groupId>programmer-zaman-now</groupId>   <!-- biasanya nama domain atau organisasi -->
     <artifactId>belajar_apache_maven</artifactId> <!-- nama project / modul -->
     <version>1.0-SNAPSHOT</version>  <!-- versi project -->
+    <packaging>pom</packaging>
 
     <name>belajar_apache_maven</name>
     <url>http://www.example.com</url> <!-- bisa diubah ke link project kamu -->
+
+    <modules>
+        <module>belajar_apache_maven_app</module>
+        <module>belajar_apache_maven_data</module>
+    </modules>
 
     <!-- Properti umum project -->
     <properties>
