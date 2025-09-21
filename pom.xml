@@ -1,36 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <!-- Versi model Maven -->
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Identitas project -->
-    <groupId>programmer-zaman-now</groupId>   <!-- biasanya nama domain atau organisasi -->
-    <artifactId>belajar_apache_maven</artifactId> <!-- nama project / modul -->
-    <version>1.0-SNAPSHOT</version>  <!-- versi project -->
+    <groupId>programmer-zaman-now</groupId>
+    <artifactId>belajar_apache_maven</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>belajar_apache_maven</name>
-    <url>http://www.example.com</url> <!-- bisa diubah ke link project kamu -->
 
     <modules>
-        <module>belajar_apache_maven_app</module>
         <module>belajar_apache_maven_data</module>
+        <module>belajar_apache_maven_app</module>
     </modules>
 
-    <!-- Properti umum project -->
     <properties>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>17</maven.compiler.release> <!-- versi Java -->
         <junit.version>5.11.0</junit.version>
-        <gson.version>2.13.2</gson.version>
+        <gson.version>2.11.0</gson.version>
     </properties>
 
-    <!-- Dependency Management (untuk mengatur versi dependency agar konsisten) -->
     <dependencyManagement>
         <dependencies>
+            <!-- Gson -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+
+            <!-- JUnit 5 BOM -->
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -38,137 +40,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- Module Data -->
+            <dependency>
+                <groupId>programmer-zaman-now</groupId>
+                <artifactId>belajar_apache_maven_data</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <!-- Dependency: library yang akan dipakai di project -->
-    <dependencies>
-
-        <!-- JUnit Jupiter (unit testing) -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope> <!-- hanya dipakai saat testing -->
-        </dependency>
-
-        <!-- JUnit Parameterized Test -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Gson (library untuk JSON) -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gson.version}</version>
-        </dependency>
-
-        <!-- Contoh tambahan: MySQL Connector -->
-        <!-- Kalau kamu pakai database MySQL -->
-        <!--
-        <dependency>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
-          <version>8.3.0</version>
-        </dependency>
-        -->
-
-    </dependencies>
-
-    <!-- Build: konfigurasi plugin Maven -->
-    <build>
-        <pluginManagement>
-            <plugins>
-                <!-- Plugin untuk bersihin target folder -->
-                <plugin>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.4.0</version>
-                </plugin>
-
-                <!-- Plugin untuk proses resource (misalnya file properties) -->
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.3.1</version>
-                </plugin>
-
-                <!-- Plugin untuk kompilasi Java -->
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.13.0</version>
-                </plugin>
-
-                <!-- Plugin untuk menjalankan unit test -->
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.3.0</version>
-                </plugin>
-
-                <!-- Plugin untuk bikin file JAR -->
-                <plugin>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.4.2</version>
-                </plugin>
-
-                <!-- Plugin untuk install JAR ke local repository -->
-                <plugin>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>3.1.2</version>
-                </plugin>
-
-                <!-- Plugin untuk deploy JAR ke remote repository -->
-                <plugin>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.1.2</version>
-                </plugin>
-
-                <!-- Plugin untuk generate site dokumentasi project -->
-                <plugin>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.12.1</version>
-                </plugin>
-
-                <!-- Plugin untuk laporan informasi project -->
-                <plugin>
-                    <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.6.1</version>
-                </plugin>
-                <!--         maven-assembly-plugin       -->
-                <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.7.1</version>
-                    <configuration>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                        <archive>
-                            <manifest>
-                                <mainClass>programmer.zaman.now.maven.App</mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                            <phase>package</phase> <!-- bind to the packaging phase -->
-                            <goals>
-                                <goal>single</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-
-    <!-- Menambahkan Repository   -->
-    <repositories>
-<!--        <repository>-->
-<!--            <id>id</id>-->
-<!--            <name>name</name>-->
-<!--            <url>url</url>-->
-<!--        </repository>-->
-    </repositories>
-
 </project>
